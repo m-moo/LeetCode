@@ -5,10 +5,15 @@ class Solution {
         int l = 0, r = height.length-1;
         while(l < r) {
             int lH = height[l], rH = height[r];
-            int vol = (r-l)*Math.min(lH,rH);
+            int vol;
+            if(lH <= rH) {
+                vol = (r-l)*lH;
+                l++;
+            }else {
+                vol = (r-l)*rH;
+                r--;
+            }
             answer = Math.max(answer,vol);
-            if(lH <= rH) l++;
-            if(lH >= rH) r--;
         }
         
         return answer;
