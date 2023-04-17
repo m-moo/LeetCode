@@ -15,10 +15,9 @@
  */
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if(isSame(root,subRoot)) return true;
-        if(root == null) return false;
-
-        return isSubtree(root.left,subRoot) || isSubtree(root.right,subRoot);
+        if (root == null) return false;
+        if (subRoot == null) return true;
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot) || isSame(root, subRoot);
     }
     
     /* 하위 노드까지 같은지 확인 */
