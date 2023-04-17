@@ -15,17 +15,10 @@
  */
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        /* BFS */
-        while(!q.isEmpty()) {
-            TreeNode tn = q.poll();
+        if(isSame(root,subRoot)) return true;
+        if(root == null) return false;
 
-            if(isSame(tn,subRoot)) return true;
-            if(tn.left != null) q.add(tn.left);
-            if(tn.right != null) q.add(tn.right);
-        }
-        return false;
+        return isSubtree(root.left,subRoot) || isSubtree(root.right,subRoot);
     }
     
     /* 하위 노드까지 같은지 확인 */
