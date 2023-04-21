@@ -8,10 +8,8 @@ class Solution {
     }
     
     public void backTrack(int[] nums, int idx, int remain, List<Integer> track, List<List<Integer>> answer) {
-        if(remain == 0) {
-            Collections.sort(track);
-            answer.add(new ArrayList<>(track));
-        }else if(remain < 0) return;
+        if(remain == 0) answer.add(new ArrayList<>(track));
+        else if(remain < 0) return;
         else {
             for(int i=idx;i<nums.length;i++) {
                 track.add(nums[i]);
