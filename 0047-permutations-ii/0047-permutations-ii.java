@@ -5,13 +5,13 @@ class Solution {
         Set<List<Integer>> answer = new HashSet<>();
         visited = new boolean[nums.length];
 
-        backTrack(nums,0,new ArrayList<>(),answer);
+        backTrack(nums,new ArrayList<>(),answer);
         
         return new ArrayList<>(answer);
     }
     
-    public void backTrack(int[] nums, int idx, List<Integer> track, Set<List<Integer>> answer) {
-        if(idx >= nums.length) {
+    public void backTrack(int[] nums, List<Integer> track, Set<List<Integer>> answer) {
+        if(track.size() == nums.length) {
             answer.add(new ArrayList<>(track));
             return;
         }
@@ -20,7 +20,7 @@ class Solution {
             if(!visited[i]) {
                 visited[i] = true;
                 track.add(nums[i]);
-                backTrack(nums, idx+1, track, answer);
+                backTrack(nums, track, answer);
                 visited[i] = false;
                 track.remove(track.size()-1);
             }
