@@ -8,15 +8,13 @@ class Solution {
     }
     
     public void backTrack(int[] nums, int idx, int remain, List<Integer> track, List<List<Integer>> answer) {
-        if(remain < 0) return;
-        else if (remain == 0) answer.add(new ArrayList<>(track));
-        else {
-            for(int i=idx;i<nums.length;i++) {
-                if(i > idx && nums[i] == nums[i-1]) continue; //skip dup
-                track.add(nums[i]);
-                backTrack(nums,i+1, remain-nums[i],track,answer);
-                track.remove(track.size()-1);
-            }
+        if (remain == 0) {answer.add(new ArrayList<>(track)); return;}
+        for(int i=idx;i<nums.length;i++) {
+            if(i > idx && nums[i] == nums[i-1]) continue; //skip dup
+            if(nums[i] > remain){break;} // no more need to proceed
+            track.add(nums[i]);
+            backTrack(nums,i+1, remain-nums[i],track,answer);
+            track.remove(track.size()-1);
         }
     }
 }
