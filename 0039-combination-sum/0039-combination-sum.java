@@ -8,14 +8,16 @@ class Solution {
     }
     
     public void backTrack(int[] nums, int idx, int remain, List<Integer> track, List<List<Integer>> answer) {
-        if(remain == 0) answer.add(new ArrayList<>(track));
-        else if(remain < 0) return;
-        else {
-            for(int i=idx;i<nums.length;i++) {
-                track.add(nums[i]);
-                backTrack(nums,i, remain-nums[i],track,answer);
-                track.remove(track.size()-1);
-            }
+        if(idx==nums.length){
+            if(remain == 0)
+                answer.add(new ArrayList<>(track));
+            return;
         }
+        if(nums[idx] <= remain) {
+            track.add(nums[idx]);
+            backTrack(nums,idx, remain-nums[idx],track,answer);
+            track.remove(track.size()-1);
+        }
+        backTrack(nums,idx+1, remain,track,answer);
     }
 }
