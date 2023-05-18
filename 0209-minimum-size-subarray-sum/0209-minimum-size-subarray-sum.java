@@ -5,7 +5,6 @@ class Solution {
         int tot = 0;
         for(int i=0,j=0;j<nums.length;j++) {
             tot += nums[j];
-
             while(tot >= target) {
                 answer = Math.min(answer,j-i+1);
                 tot -= nums[i++];
