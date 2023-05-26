@@ -1,12 +1,14 @@
 class Solution {
     public boolean isIsomorphic(String s, String t) {
-        List<Character> sList = new ArrayList<>();
-        List<Character> tList = new ArrayList<>();
-        for(int i=0;i<s.length();i++) {
+        int[] sMap = new int[256];
+        int[] tMap = new int[256];
+        for(int i = 0; i <  s.length(); i++) {
             char sc = s.charAt(i), tc = t.charAt(i);
-            if(!sList.contains(sc)) sList.add(sc);
-            if(!tList.contains(tc)) tList.add(tc);
-            if(sList.indexOf(sc) != tList.indexOf(tc)) return false;
+            if(sMap[sc] != tMap[tc]) {
+                return false;
+            }
+            sMap[sc] = i + 1;
+            tMap[tc] = i + 1;
         }
         return true;
     }
