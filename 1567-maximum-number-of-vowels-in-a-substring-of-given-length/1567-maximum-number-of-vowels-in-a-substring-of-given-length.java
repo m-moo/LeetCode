@@ -1,29 +1,29 @@
 class Solution {
     public int maxVowels(String s, int k) {
-        int max = 0;
+        int n = s.length();
+        int maxVowels = 0;
+        int count = 0;
 
-        char[] vowels = {'a','e','i','o','u'};
-        HashMap<Character, Integer> vowelMap = new HashMap<>();
-        for(int i=0;i< vowels.length;i++) {
-            vowelMap.put(vowels[i], 1);
+        int[] vowels = new int[128];
+        vowels['a'] = 1;
+        vowels['e'] = 1;
+        vowels['i'] = 1;
+        vowels['o'] = 1;
+        vowels['u'] = 1;
+
+        for (int i = 0; i < k; i++) {
+            count += vowels[s.charAt(i)];
         }
 
-        int cnt = 0;
-        int l = 0, r = 0;
-        while (r < s.length()) {
-            if (l + k != r) {
-                if(vowelMap.containsKey(s.charAt(r++))) cnt++;
-            } else {
-                char charR = s.charAt(r++);
-                char charL = s.charAt(l++);
+        maxVowels = count;
+        for (int i = k; i < n; i++) {
+            count += vowels[s.charAt(i)] - vowels[s.charAt(i - k)];
+            maxVowels = Math.max(maxVowels, count);
 
-                if(vowelMap.containsKey(charL)) cnt--;
-                if(vowelMap.containsKey(charR)) cnt++;
-            }
-            if (l + k == r) {
-                max = Math.max(cnt,max);
+            if (maxVowels == k) {
+                return maxVowels;
             }
         }
-        return max;
+        return maxVowels;
     }
 }
