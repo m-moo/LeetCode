@@ -1,30 +1,26 @@
 class Solution {
-    boolean[] visited = new boolean[10];
-    int limitCount;
+    List<List<Integer>> answer = new ArrayList<>();
+    List<Integer> list = new ArrayList<>();
 
     public List<List<Integer>> combinationSum3(int k, int n) {
-        HashSet<List<Integer>> answer = new HashSet<>();
-        limitCount = k;
-        backTrack(new HashSet<>(), 1, n, answer);
-
-        return new ArrayList<>(answer);
+        backTrack(k,n,1);
+        return answer;
     }
-    public void backTrack(HashSet<Integer> comb, int currentCount, int left, HashSet<List<Integer>> answer) {
-        if(currentCount > limitCount) {
-            if(left == 0) answer.add(new ArrayList<>(comb));
-            return;
+    public void backTrack(int k, int n, int start) {
+        if (k == 0) {
+            if (n == 0) {
+                answer.add(new ArrayList<>(list));
+                return;
+            }
         }
 
-        for(int i=1;i<visited.length;i++) {
-            if(visited[i]) continue;
-
-            visited[i] = true;
-            HashSet<Integer> newComb = new HashSet<>(comb);
-            if(i <= left) {
-                newComb.add(i);
-                backTrack(newComb, currentCount+1, left-i, answer);
+        for (int i = start; i <= 9; i++) {
+            if (i > n) {
+                return;
             }
-            visited[i] = false;
+            list.add(i);
+            backTrack(k-1,n-i,i+1);
+            list.remove(list.size()-1);
         }
     }
 }
