@@ -1,36 +1,37 @@
 class Solution {
-    HashSet<String> set;
-    String origin;
+    int len;
+    List<String> ipList;
 
     public List<String> restoreIpAddresses(String s) {        
-        origin = s;
-        set = new HashSet<>();
-        backTrack(s, new ArrayList<>());
-        return set.stream().toList();
+        len = s.length();
+        ipList = new ArrayList<>();
+        backTrack(s,0, "", 0);
+        return ipList;
     }
 
-    public void backTrack(String s, List<String> ip) {
-        if(ip.size() == 4) {
-            if(s.isEmpty()) {
-                String sum = String.format("%s%s%s%s", ip.get(0),ip.get(1),ip.get(2),ip.get(3));
-                if(sum.equals(origin)) {
-                    set.add(String.format("%s.%s.%s.%s",
-                        ip.get(0),ip.get(1),ip.get(2),ip.get(3)));
-                }
+    public boolean isIp(String ip) {
+        if(ip.length() > 3 || ip.length() == 0) return false;
+        if(ip.length() > 1 && ip.charAt(0) == '0') return false;
+        if(ip.length() > 0 && Integer.parseInt(ip) > 255) return false;
+        return true;
+    }
+
+    public void backTrack(String s, int idx, String ip, int dot) {
+        if(dot == 3) {
+            if(isIp(s.substring(idx))) {
+                ip += s.substring(idx);
+                ipList.add(ip);
             }
             return;
         }
 
-        for(int i=1;i<4;i++) {
-            if(s.length() < i) continue;
-            int num = Integer.parseInt(s.substring(0,i));
-
-            int lastPossiblePart = s.substring(i).length()/3 +
-                (s.substring(i).length()%3>0?1:0);
-            if(num > 255 || lastPossiblePart > 4-ip.size()) continue;
-            ip.add(Integer.toString(num));
-            backTrack(s.substring(i), ip);
-            ip.remove(ip.size()-1);
+        for(int i=idx;i<len;i++) {
+            if(isIp(s.substring(idx, i+1))) {
+                int k = s.substring(idx, i+1).length();
+                ip += s.substring(idx, i+1) + ".";
+                backTrack(s, i+1, ip, dot+1);
+                ip = ip.substring(0, ip.length()-k-1);
+            }
         }
     }
 }
