@@ -1,17 +1,13 @@
 class Solution {
     public int maxSatisfaction(int[] satisfaction) {
-        int max = 0;
-        int len = satisfaction.length;
-        Arrays.sort(satisfaction);
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        for(int s:satisfaction) pq.offer(s);
 
-        for(int i=len;i>0;i--) {
-            int sum = 0;
-            int cnt = i;
-            for(int j=len-1;j>=len-i;j--) {
-                sum += satisfaction[j]*cnt--;
-            }
-            max = Math.max(max,sum);
+        int answer = 0, curr = 0;
+        while(!pq.isEmpty() && pq.peek()+curr > 0) {
+            curr += pq.poll();
+            answer += curr;
         }
-        return max;
+        return answer;
     }
 }
