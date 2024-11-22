@@ -6,13 +6,10 @@ class Solution:
         
         l, r = 0, 1
         while r < len(prices):
-            res = max(res, prices[r] - prices[l])
-            if prices[l] > prices[r]:
-                l += 1
+            if prices[l] < prices[r]:
+                res = max(res, prices[r] - prices[l])
             else:
-                r += 1
-
-            if l == r:
-                r += 1
+                l = r
+            r += 1
         return res
         
