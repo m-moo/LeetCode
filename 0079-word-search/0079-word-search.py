@@ -4,8 +4,16 @@ class Solution:
         tot_cells = rows * cols
         if len(word) > tot_cells: return False
 
-        path = set()
+        board_cnt = Counter()
+        for row in board:
+            board_cnt.update(row)
+        word_cnt = Counter(word)
 
+        for c in word:
+            if word_cnt[c] > board_cnt[c]:
+                return False
+
+        path = set()
         def dfs(r, c, i):
             if i == len(word):
                 return True
