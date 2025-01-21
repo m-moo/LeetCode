@@ -1,6 +1,9 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         rows , cols = len(board), len(board[0])
+        tot_cells = rows * cols
+        if len(word) > tot_cells: return False
+
         path = set()
 
         def dfs(r, c, i):
